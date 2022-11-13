@@ -1,0 +1,24 @@
+<div
+  class="task"
+  [id]="taskId"
+  [draggable]="true"
+  (dragstart)="dropStart($event)"
+  (dragend)="dropEnd($event)"
+>
+  <div class="menu" (click)="menu.toggle($event)" *ngIf="isMenuVisible">
+    ...
+  </div>
+  <app-element-menu #menu>
+    <div class="menu-item" (click)="editTask()">Edit</div>
+    <div class="menu-item" (click)="deleteTask()">Delete</div>
+    <div class="menu-item" (click)="archiveTask()">Archive</div>
+  </app-element-menu>
+  <div class="task__name">{{ title }}</div>
+
+  <div class="task__footer">
+    <div class="task__commentsCount">⊑: {{ commentsCount }}</div>
+    <div class="task__creationDate">
+      {{ createdDate | date: 'MMM d, h:mm ' }}
+    </div>
+  </div>
+</div>

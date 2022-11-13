@@ -1,0 +1,8 @@
+<div class="comment-block">
+    <div class="comment-block__backend-error" *ngIf="backEndError | async">Oops.. something went wrong</div>
+    <div class="comment-block__validation-error" *ngIf="isValidationError">Oops.. validation error</div>
+    <form [formGroup]="commentForm" class="comment-block__form">
+        <textarea formControlName = 'text' class="comment-block__input" placeholder="comment text" rows="5"></textarea>
+        <button class="comment-block__button" (click)="postComment()">Send</button>
+    </form>
+</div>

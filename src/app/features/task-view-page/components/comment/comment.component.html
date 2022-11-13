@@ -1,0 +1,9 @@
+<div class="comment" *ngIf="subject">
+  <div class="comment__delete-button" (click)="deleteComment()">&#10006;</div>
+  <div class="comment__text">
+    {{ text }}
+  </div>
+  <div class="comment__date">
+    {{ date | date: 'M/d/yy, h:mm a' }}
+  </div>
+</div>

@@ -1,0 +1,54 @@
+<div class="auth">
+  <div class="auth__title">Register</div>
+  <div class="auth__backend-error" *ngIf="backendErrors$ | async">
+    backend error 
+  </div>
+  <a class="auth__routerLink" routerLink="/auth/login">Have an account?</a>
+  <form [formGroup]="authForm" class="auth__form" (ngSubmit)="onSubmit()">
+    <fieldset>
+      <label
+        *ngIf="!loginValidation; else loginErr"
+        class="auth__label"
+        for="login"
+        >Login</label
+      >
+      <ng-template #loginErr>
+        <div class="auth__validate-error">
+          {{ loginValidation }}
+        </div>
+      </ng-template>
+      <input
+        formControlName="username"
+        class="auth__input"
+        type="text"
+        id="login"
+        placeholder="Your login"
+      />
+      <label
+        *ngIf="!passwordValidation; else passwordErr"
+        class="auth__label"
+        for="password"
+        >Password</label
+      >
+      <ng-template #passwordErr><div class="auth__validate-error">
+        {{
+          passwordValidation
+        }}
+      </div></ng-template>
+      <input
+        formControlName="password"
+        class="auth__input"
+        type="password"
+        id="password"
+        placeholder="Your password"
+      />
+      <button
+        [disabled]="$isButtonSubmitting | async"
+        type="submit"
+        class="auth__send-button"
+      >
+        Send
+      </button>
+    </fieldset>
+  </form>
+</div>

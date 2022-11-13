@@ -1,0 +1,43 @@
+.comment-block {
+  padding-top: 50px;
+  position: relative;
+  z-index: 20;
+  &__backend-error {
+    font-size: 16px;
+    color: red;
+  }
+
+  &__validation-error {
+    font-size: 16px;
+    color: rgb(192, 0, 0);
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+  }
+
+  &__input {
+    width: 100%;
+    font-size: 16px;
+    color: gray;
+
+    box-sizing: border-box;
+    padding: 10px;
+    border: 1px solid gray;
+  }
+
+  &__button {
+    background-color: green;
+    font-size: 18px;
+    box-sizing: border-box;
+    padding: 10px;
+    cursor: pointer;
+    align-self: flex-end;
+
+    width: 150px;
+    color: white;
+    border: none;
+  }
+}

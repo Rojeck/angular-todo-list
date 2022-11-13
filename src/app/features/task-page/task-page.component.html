@@ -1,0 +1,196 @@
+<ng-container *ngIf="!(backendErrors$ | async)">
+  <div class="container">
+    <div class="control-bar">
+      <app-sort
+        [sortByValue]="sortByValue$ | async"
+        [sortTypeValue]="sortTypeValue$ | async"
+        (sortTypeChanged)="sortTypeChange($event)"
+        (sortByChanged)="sortByChange($event)"
+        (filterChanged)="setFilterValue($event)"
+      >
+        <option value="name">Name</option>
+        <option value="date">Date</option>
+      </app-sort>
+      <div class="archive-link" [routerLink]="'archive'">ARCHIVE</div>
+      <div class="delete-button" (click)="deleteDashboard()">
+        DELETE DASHBOARD
+      </div>
+    </div>
+    <div class="global-error" *ngIf="backendErrors$ | async">
+      Oops... Something went wrong. <span href="/">Try again</span>
+    </div>
+    <div class="global-error" *ngIf="changeTaskFailure$ | async">
+      Oops... Something went wrong. Please, try again..
+    </div>
+    <div class="content" *ngIf="!(backendErrors$ | async)">
+      <div class="tasks">
+        <div class="tasks__container-title">TODO</div>
+        <div class="tasks__add-task" (click)="openTaskCreateWindow('TODO')">
+          +
+        </div>
+        <div
+          class="tasks__container"
+          data-type="TODO"
+          [ngStyle]="{ 'background-color': (dashboard$ | async)?.colors?.TODO }"
+          (dragover)="dragOver($event)"
+          (drop)="dragDrop($event)"
+        >
+          <ng-container *ngIf="dashboard$ | async as dashboard">
+            <app-task
+              *ngFor="
+                let task of dashboard['tasks']
+                  | taskStatus: 'TODO'
+                  | filter: filterValue
+              "
+              [subject]="task"
+              (editEmmiter)="openTaskEditWindow($event)"
+              (archiveEmmiter)="archiveTasks($event)"
+              (deleteEmmiter)="deleteTask($event)"
+              [routerLink]="'tasks/' + task._id"
+            >
+            </app-task>
+          </ng-container>
+        </div>
+        <app-container-color
+          [dashboardId]="dashboardId"
+          [containerType]="'TODO'"
+          [value]="(dashboard$ | async)?.colors?.TODO"
+        ></app-container-color>
+      </div>
+      <div class="tasks">
+        <div class="tasks__container-title">IN PROGRESS</div>
+        <div
+          class="tasks__add-task"
+          (click)="openTaskCreateWindow('IN_PROGRESS')"
+        >
+          +
+        </div>
+        <div
+          class="tasks__container"
+          data-type="IN_PROGRESS"
+          [ngStyle]="{
+            'background-color': (dashboard$ | async)?.colors?.IN_PROGRESS
+          }"
+          (dragover)="dragOver($event)"
+          (drop)="dragDrop($event)"
+        >
+          <ng-container *ngIf="dashboard$ | async as dashboard">
+            <app-task
+              *ngFor="
+                let task of dashboard['tasks']
+                  | taskStatus: 'IN_PROGRESS'
+                  | filter: filterValue
+              "
+              [subject]="task"
+              (editEmmiter)="openTaskEditWindow($event)"
+              (deleteEmmiter)="deleteTask($event)"
+              (archiveEmmiter)="archiveTasks($event)"
+              [routerLink]="'tasks/' + task._id"
+            >
+            </app-task>
+          </ng-container>
+        </div>
+        <app-container-color
+          [dashboardId]="dashboardId"
+          [containerType]="'IN_PROGRESS'"
+          [value]="(dashboard$ | async)?.colors?.IN_PROGRESS"
+        ></app-container-color>
+      </div>
+      <div class="tasks">
+        <div class="tasks__container-title">DONE</div>
+        <div class="tasks__add-task" (click)="openTaskCreateWindow('DONE')">
+          +
+        </div>
+        <div
+          class="tasks__container"
+          data-type="DONE"
+          [ngStyle]="{ 'background-color': (dashboard$ | async)?.colors?.DONE }"
+          (dragover)="dragOver($event)"
+          (drop)="dragDrop($event)"
+        >
+          <ng-container *ngIf="dashboard$ | async as dashboard">
+            <app-task
+              *ngFor="
+                let task of dashboard['tasks']
+                  | taskStatus: 'DONE'
+                  | filter: filterValue
+              "
+              [subject]="task"
+              (editEmmiter)="openTaskEditWindow($event)"
+              (deleteEmmiter)="deleteTask($event)"
+              (archiveEmmiter)="archiveTasks($event)"
+              [routerLink]="'tasks/' + task._id"
+            >
+            </app-task>
+          </ng-container>
+        </div>
+        <app-container-color
+          [dashboardId]="dashboardId"
+          [containerType]="'DONE'"
+          [value]="(dashboard$ | async)?.colors?.DONE"
+        ></app-container-color>
+      </div>
+    </div>
+  </div>
+</ng-container>
+<div class="back-end-error" *ngIf="backendErrors$ | async">
+  Oops... Something went wrong
+</div>
+<app-modal
+  *ngIf="isCreateModalVisible$ | async"
+  [title]="'Create task'"
+  (modalClose)="closeTaskCreateModal()"
+  (modalSubmit)="postTask()"
+>
+  <p *ngIf="changeTaskFailure$ | async" class="modal-error-message">
+    An error occured. Please, try later
+  </p>
+  <p *ngIf="isValidationError" class="modal-error-message">
+    Name should be at least 6 symbols and not more than 24 symbols, description
+    should be not more than 52 symbols
+  </p>
+  <form [formGroup]="taskForm" class="modal-form">
+    <input
+      class="form__input"
+      formControlName="name"
+      type="text"
+      placeholder="task name"
+    />
+    <textarea
+      class="form__input"
+      formControlName="description"
+      type="text"
+      placeholder="task description"
+      rows="10"
+    ></textarea>
+  </form>
+</app-modal>
+<app-modal
+  *ngIf="isEditModalVisible$ | async"
+  [title]="'Edit task'"
+  (modalClose)="closeTaskEditModal()"
+  (modalSubmit)="editTask($event)"
+>
+  <p *ngIf="changeTaskFailure$ | async" class="modal-error-message">
+    An error occured. Please, try later
+  </p>
+  <p *ngIf="isValidationError" class="modal-error-message">
+    Name should be at least 6 symbols and not more than 24 symbols, description
+    should be not more than 52 symbols
+  </p>
+  <form [formGroup]="taskForm" class="modal-form">
+    <input
+      class="form__input"
+      formControlName="name"
+      type="text"
+      placeholder="dashboard name"
+    />
+    <textarea
+      class="form__input"
+      formControlName="description"
+      type="text"
+      placeholder="dashboard description"
+      rows="10"
+    ></textarea>
+  </form>
+</app-modal>

@@ -1,0 +1,51 @@
+.task {
+  position: relative;
+  display: flex;
+  background-color: #fff;
+  cursor: pointer;
+  padding: 10px;
+  flex-direction: column;
+  gap: 10px;
+  transition: all 0.5s;
+  color: green;
+  border-bottom: 1px solid gray;
+  &__name {
+    font-size: 20px;
+  }
+  &__footer {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 5px;
+  }
+
+  &__description {
+    font-size: 16px;
+    color: gray;
+  }
+
+  &__creationDate,
+  &__commentsCount {
+    font-size: 18px;
+  }
+  &:hover {
+    color: white;
+    background-color: green;
+  }
+}
+.menu {
+  position: absolute;
+  top: -5px;
+  right: 10px;
+  font-size: 25px;
+}
+.menu-item {
+  font-size: 16px;
+  padding: 5px;
+  color: green;
+  transition: all 0.2s;
+  line-height: 14px;
+  &:hover {
+    background-color: rgba(0, 128, 0, 0.342);
+    color: white;
+  }
+}

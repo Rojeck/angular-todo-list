@@ -1,0 +1,44 @@
+<ng-container *ngIf="!(backEndErrors$ | async); else backEndError">
+  <div class="container">
+    <div class="task">
+      <div class="task__name">{{ (task | async)?.name }}</div>
+      <div class="task__date">
+        {{ (task | async)?.created_at | date: 'M/d/yy, h:mm a' }}
+      </div>
+      <div
+        class="task__description"
+        *ngIf="(task | async)?.description; else NoDescription"
+      >
+        {{ (task | async)?.description }}
+      </div>
+      <ng-template #NoDescription
+        ><div class="task__description-none">
+          Description is empty
+        </div></ng-template
+      >
+    </div>
+    <app-comment-add
+      [taskId]="taskId"
+      [dashboardId]="dashboardId"
+    ></app-comment-add>
+
+    <div
+      class="comments__container"
+      *ngIf="(task | async)?.comments?.length; else noComments"
+    >
+      <div class="comment" *ngFor="let comment of (task | async)?.comments">
+        <app-comment
+          [subject]="comment"
+          [taskId]="taskId"
+          [dashboardId]="dashboardId"
+        ></app-comment>
+      </div>
+    </div>
+    <ng-template #noComments>
+      <div class="comments__no-comments">comments is empty</div>
+    </ng-template>
+  </div>
+</ng-container>
+<ng-template #backEndError
+  ><div class="back-end-error">Oops... Something went wrong</div></ng-template
+>

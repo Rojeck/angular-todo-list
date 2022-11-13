@@ -1,0 +1,102 @@
+<app-sort
+  [sortByValue]="sortByValue$ | async"
+  [sortTypeValue]="sortTypeValue$ | async"
+  (sortTypeChanged)="sortTypeChange($event)"
+  (sortByChanged)="sortByChange($event)"
+  (filterChanged)="setFilterValue($event)"
+>
+  <option value="name">Name</option>
+  <option value="date">Date</option>
+  <option value="countOfTasks">Count</option>
+</app-sort>
+<div *ngIf="dashboards$ | async as dashboards">
+  <div
+    (click)="openDashboardCreateWindow()"
+    *ngIf="!(dashboards.length === 0)"
+    class="add-dashboard-button"
+  >
+    <p class="add-dashboard-button__text">Add dashboard</p>
+  </div>
+  <br />
+  <app-dashboard
+    *ngFor="let dashboard of dashboards | filterDashboards: filterValue"
+    [subject]="dashboard"
+    (editEmmiter)="openDashboardEditWindow($event)"
+    (deleteEmmiter)="deleteDashboard($event)"
+    [routerLink]="'dashboard/' + dashboard._id"
+  ></app-dashboard>
+</div>
+
+<div *ngIf="getDashboardsError$ | async" class="dashboard-statate-message">
+  Opps.... Something went wrong! <a href="/">Try again!</a>
+</div>
+<div></div>
+<div
+  *ngIf="(dashboards$ | async)?.length === 0"
+  class="dashboard-statate-message"
+>
+  Dashboard page is empty.
+  <span
+    (click)="openDashboardCreateWindow()"
+    class="dashboard-statate-message__add-dashboard"
+    >Add your first dashboard!</span
+  >
+</div>
+<app-modal
+  *ngIf="isCreateModalVisible$ | async"
+  [title]="'Create dashboard'"
+  (modalClose)="closeDashboardCreateModal()"
+  (modalSubmit)="postDashboard()"
+>
+  <p *ngIf="changeDashboardsError$ | async" class="modal-error-message">
+    An error occured. Please, try later
+  </p>
+  <p *ngIf="isValidationError" class="modal-error-message">
+    Name should be at least 6 symbols and not more than 24 symbols, description
+    should be not more than 52 symbols
+  </p>
+  <form [formGroup]="dashboardForm" class="modal-form">
+    <input
+      class="form__input"
+      formControlName="name"
+      type="text"
+      placeholder="dashboard name"
+    />
+    <textarea
+      class="form__input"
+      formControlName="description"
+      type="text"
+      placeholder="dashboard description"
+      rows="10"
+    ></textarea>
+  </form>
+</app-modal>
+<app-modal
+  *ngIf="isEditModalVisible$ | async"
+  [title]="'Edit dashboard'"
+  (modalClose)="closeDashboardEditModal()"
+  (modalSubmit)="editDashboard()"
+>
+  <p *ngIf="changeDashboardsError$ | async" class="modal-error-message">
+    An error occured. Please, try later
+  </p>
+  <p *ngIf="isValidationError" class="modal-error-message">
+    Name should be at least 6 symbols and not more than 24 symbols, description
+    should be not more than 52 symbols
+  </p>
+  <form [formGroup]="dashboardForm" class="modal-form">
+    <input
+      class="form__input"
+      formControlName="name"
+      type="text"
+      placeholder="dashboard name"
+    />
+    <textarea
+      class="form__input"
+      formControlName="description"
+      type="text"
+      placeholder="dashboard description"
+      rows="10"
+    ></textarea>
+  </form>
+</app-modal>

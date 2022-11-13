@@ -1,0 +1,20 @@
+<div class="container">
+    <div class="archive">
+        <div class="archive__title">Archive</div>
+        <div class="archive__archive-empty" *ngIf="isArchiveEmpty">Archive is empty</div>
+        <div class="archive__container" *ngIf="!isArchiveEmpty">
+          <ng-container *ngIf="dashboard$ | async as dashboard">
+            <app-task
+              *ngFor="
+                let task of dashboard['tasks']
+                  | taskStatus: 'ARCHIVED'
+                  | filter: filterValue
+              "
+              [subject]="task"
+              [isMenuVisible]="false"
+            >
+            </app-task>
+          </ng-container>
+        </div>
+      </div>
+</div>

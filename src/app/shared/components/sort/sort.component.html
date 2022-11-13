@@ -1,0 +1,20 @@
+<div class="sort">
+ 
+    <input class="sort__input" placeholder="Filter by name..." type="text" (input)="filterChange($event)" />
+
+  <select 
+    class="sort__sort-by"
+    [value]="sortByValue"
+    (change)="sortByChange($event)"
+  >
+    <ng-content></ng-content>
+  </select>
+  <select
+    class="sort__sort-type"
+    [value]="sortTypeValue"
+    (change)="sortTypeChange($event)"
+  >
+    <option value="ASC">ASC</option>
+    <option value="DESC">DESC</option>
+  </select>
+</div>

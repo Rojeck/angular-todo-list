@@ -1,0 +1,108 @@
+.modal-form {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  gap: 20px;
+  input {
+    width: 100%;
+    border: 5px;
+    height: 35px;
+    font-size: 18px;
+    border: 1px solid gray;
+    box-sizing: border-box;
+    color: rgb(68, 68, 68);
+    padding: 5px;
+    font-family: serif;
+  }
+  textarea {
+    font-size: 18px;
+    border: 1px solid gray;
+    box-sizing: border-box;
+    color: rgb(68, 68, 68);
+    padding: 5px;
+    font-family: serif;
+  }
+  input:active {
+    border: 1px solid rgba(0, 0, 255, 0.233);
+  }
+}
+.modal-error-message {
+  font-size: 14px;
+  color: red;
+  text-align: center;
+}
+.archive-link {
+  cursor: pointer;
+  transition: all 0.2s;
+  &:hover {
+    color: rgba(0, 128, 0, 0.692);
+  }
+}
+
+.content {
+  margin: 0 auto;
+  display: flex;
+  padding-top: 50px;
+  justify-content: space-between;
+}
+.tasks {
+  flex: 0 1 30%;
+  &__add-task {
+    color: green;
+    border: 1px solid green;
+    border-bottom: none;
+    font-size: 24px;
+    box-sizing: border-box;
+    padding: 10px;
+    text-align: center;
+    cursor: pointer;
+    transition: 0.2s ease-in;
+    &:hover {
+      color: white;
+      background-color: green;
+    }
+  }
+
+  &__container {
+    border: 1px solid gray;
+    height: 100%;
+    background-color: white;
+  }
+  &__container-title {
+    font-size: 18px;
+    color: green;
+    padding-bottom: 5px;
+  }
+}
+.container {
+  max-width: 1600px;
+  margin: 0 auto;
+  position: relative;
+  background-color: white;
+  z-index: 20;
+}
+.back-end-error {
+  padding-top: 50px;
+  font-size: 24px;
+  color: gray;
+  text-align: center;
+}
+.control-bar {
+  display: flex;
+  gap: 40px;
+  justify-content: center;
+}
+.archive-link {
+  font-size: 22px;
+  color: green;
+  line-height: 70px;
+}
+.delete-button {
+  font-size: 14px;
+  line-height: 70px;
+  color: rgb(63, 63, 63);
+  cursor: pointer;
+}
+.delete-button:hover {
+  color: rgba(128, 128, 128, 0.493);
+}

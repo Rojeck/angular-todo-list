@@ -1,0 +1,67 @@
+:host {
+  height: 80vh;
+  display: block;
+  display: flex;
+  align-items: center;
+}
+.auth {
+  flex: 0 1 600px;
+
+  &__title {
+    font-size: 44px;
+    color: green;
+    text-align: center;
+    padding-bottom: 10px;
+  }
+
+  &__routerLink {
+    font-size: 16px;
+    display: block;
+    padding-bottom: 5px;
+    text-decoration: none;
+    color: rgba(0, 128, 0, 0.712);
+    text-align: center;
+  }
+  &__routerLink:hover {
+    color: green;
+  }
+
+  &__label {
+    color: rgba(0, 77, 0, 0.89);
+  }
+
+  &__input {
+    font-size: 16px;
+    color: rgb(44, 44, 44);
+    padding: 5px;
+    border: 1px solid gray;
+    border-radius: 2px;
+  }
+
+  &__validate-error {
+    color: red;
+  }
+
+  &__send-button {
+    width: 180px;
+    height: 35px;
+    font-size: 18px;
+    color: white;
+    text-transform: uppercase;
+    background-color: rgba(0, 128, 0, 0.877);
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    align-self: flex-end;
+  }
+  &__send-button:hover {
+    background-color: green;
+  }
+}
+fieldset {
+  border: none;
+  outline: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}

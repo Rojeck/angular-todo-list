@@ -1,0 +1,15 @@
+<div class="content">
+    <div class="menu" (click)="menu.toggle($event);">...</div>
+    <app-element-menu #menu>
+        <div class="menu-item" (click)='editDashboard()'>Edit</div>
+        <div class="menu-item" (click)='deleteDashboard()'>Delete</div>
+    </app-element-menu>
+    <div class="title">{{ title }}</div>
+    <div class="description">{{ description }}</div>
+    <div class="created-date">{{ createdDate | date}}</div>
+    <div class="counter">
+        <div class="counter-item">✚: {{ taskCounterTodo }} </div>
+        <div class="counter-item">♺: {{ taskCounterInProgress }} </div>
+        <div class="counter-item">☑: {{ taskCounterDone}} </div>
+    </div>
+</div>
