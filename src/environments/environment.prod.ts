@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  apiUrl: 'http://node-env.eba-xmfpvg3d.us-east-1.elasticbeanstalk.com/'
+  apiUrl: 'https://pure-shore-32221.herokuapp.com/'
   
 };
