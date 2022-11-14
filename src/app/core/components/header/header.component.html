@@ -2,8 +2,8 @@
   <div class="container">
     <div class="header__logo" routerLink="">TODO List</div>
     <nav class="header__nav" *ngIf="!(isLoggedIn$ | async)">
-      <a class="header__link" routerLink="/auth/login">Sign in</a>
-      <a class="header__link" routerLink="/auth/register">Log in</a>
+      <a class="header__link" routerLink="/auth/login">Log in</a>
+      <a class="header__link" routerLink="/auth/register">Sign in</a>
     </nav>
     <div class="header__username" *ngIf="currentUserUsername$ | async">
       {{ currentUserUsername$ | async }}
