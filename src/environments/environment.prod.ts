@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://https://node-p9cl.onrender.com/'
+  apiUrl: 'https://laptop2.onrender.com/api/'
   
 };
